@@ -9,18 +9,16 @@ struct MyHandler;
 impl slack::EventHandler for MyHandler {
     fn on_event(&mut self, cli: &RtmClient, event: Event) {
         match event {
-            Event::Message(msg) => {
-                match *msg {
-                    Message::Standard(m) => {
-                        let ch = m.channel.unwrap();
-                        let text = m.text.unwrap().replace(",", "");
+            Event::Message(msg) => match *msg {
+                Message::Standard(m) => {
+                    let ch = m.channel.unwrap();
+                    let text = m.text.unwrap().replace(",", "");
 
-                        let _ = cli.sender().send_message(&ch, &format!("{}poyo", text));
-                    },
-                    _ => {},
+                    let _ = cli.sender().send_message(&ch, &format!("{}poyo", text));
                 }
+                _ => {}
             },
-            _ => {},
+            _ => {}
         }
     }
 
